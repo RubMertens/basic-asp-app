@@ -1,0 +1,30 @@
+@model Questioning.Web.Controllers.ExamDetail
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>@Model.Name</h2>
+
+<p>@Model.Description</p>
+
+<hr>
+
+<h3>Questions</h3>
+
+<ul>
+    @foreach (var q in Model.Questions)
+    {
+        <li>
+            <h4>@q.Question</h4>
+            <ul>
+                @foreach (var a in q.Answers)
+                {
+                    <li class="@(a.IsCorrect ? "fw-bold" : "")">@a.Answer</li>
+                }
+            </ul>
+            <a asp-action="EditQuestion" asp-route-id="@q.Id">Edit</a>
+        </li>
+    }
+</ul>

@@ -1,0 +1,19 @@
+@model Questioning.Web.Controllers.ExamsOverview    
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}       
+
+<h2>Exam overview</h2>
+
+<nav>
+    <ul>
+        @foreach (var exam in Model.Exams)
+        {
+            <li>
+                <a href="@Url.Action("Details", "Exam", new { id = exam.Id })">@exam.Name</a>
+            </li>
+        }
+    </ul>
+</nav>
