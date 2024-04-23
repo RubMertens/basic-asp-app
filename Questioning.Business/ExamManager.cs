@@ -29,7 +29,7 @@ public class ExamManager(
         return new Result<Exam>(exam, validation);
     }
 
-    public IResult<Question> CreateQuestion(string name, List<Answer> possibleAnswers, Question.QuestionType questionQuestionType)
+    public IResult<Question> CreateQuestion(string name, List<Answer> possibleAnswers, QuestionType questionQuestionType)
     {
         var question = new Question
         {
