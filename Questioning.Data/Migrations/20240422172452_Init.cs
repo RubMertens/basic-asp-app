@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Questioning.Persistance.Migrations
+namespace Questioning.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration

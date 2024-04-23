@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Questioning.Contracts;
 using Questioning.Core;
 using Questioning.Persistance;
+using Questioning.Persistence;
 
 namespace Questioning.Web.Controllers;
 
@@ -65,7 +66,7 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
                 Name = Enum.GetName(question.QuestionType),
                 Value = (int)question.QuestionType
             },
-            QuestionTypeOptions = Enum.GetValues<Question.Type>().Select(v => new EditQuestion.QuestionTypeValue()
+            QuestionTypeOptions = Enum.GetValues<QuestionType>().Select(v => new EditQuestion.QuestionTypeValue()
             {
                 Name = Enum.GetName(v),
                 Value = (int)v
@@ -97,7 +98,7 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
         {
             Id = model.Id,
             Value = model.Question,
-            QuestionType = (Question.Type)model.QuestionType.Value,
+            QuestionType = (QuestionType)model.QuestionType.Value,
             PossibleAnswers = model.Answers.Select(a => new Answer()
             {
                 Id = a.AnswerId,

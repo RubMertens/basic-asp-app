@@ -1,17 +1,26 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Questioning.Contracts;
 
 public class Question
 {
-    public int Id { get; set; }
-    public string Value { get; set; } = string.Empty;
-    public List<Answer> PossibleAnswers { get; set; } = new();
-    public Type QuestionType { get; set; }
-    public int ExamId { get; set; }
+    [Key] public int Id { get; set; }
 
-    public enum Type
-    {
-        None = 0,
-        SingleChoice = 1,
-        MultipleChoice = 2,
-    }
+    [Required]
+    [MaxLength(100)]
+    public string Value { get; set; } = string.Empty;
+
+    public List<Answer> PossibleAnswers { get; set; } = new();
+    public QuestionType QuestionType { get; set; }
+    public int ExamId { get; set; }
+    [ForeignKey(nameof(ExamId))] 
+    public Exam Exam { get; set; }
+}
+
+public enum QuestionType
+{
+    None = 0,
+    SingleChoice = 1,
+    MultipleChoice = 2,
 }

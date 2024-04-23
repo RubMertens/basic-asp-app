@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Questioning.Persistance;
+using Questioning.Persistence;
 
 #nullable disable
 
-namespace Questioning.Persistance.Migrations
+namespace Questioning.Persistence.Migrations
 {
     [DbContext(typeof(ExamDbContext))]
     partial class ExamDbContextModelSnapshot : ModelSnapshot

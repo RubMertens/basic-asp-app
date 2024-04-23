@@ -8,7 +8,7 @@ using Questioning.Persistance;
 
 #nullable disable
 
-namespace Questioning.Persistance.Migrations
+namespace Questioning.Persistence.Migrations
 {
     [DbContext(typeof(ExamDbContext))]
     [Migration("20240422172452_Init")]

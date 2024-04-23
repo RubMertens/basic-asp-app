@@ -3,7 +3,18 @@ using Questioning.Contracts;
 
 namespace Questioning.Persistance;
 
-public class ExamDbContext : DbContext
+public interface IExamDbContext
+{
+    DbSet<Exam> Exams { get; set; }
+    DbSet<Question> Questions { get; set; }
+    DbSet<Answer> Answers { get; set; }
+    DbSet<QuestionResult> QuestionResults { get; set; }
+    DbSet<ExamResult> ExamResults { get; set; }
+
+    void SaveChanges();
+}
+
+public class ExamDbContext : DbContext, IExamDbContext
 {
     public required DbSet<Exam> Exams { get; set; }
     public required DbSet<Question> Questions { get; set; }
@@ -11,13 +22,14 @@ public class ExamDbContext : DbContext
     public required DbSet<QuestionResult> QuestionResults { get; set; }
     public required DbSet<ExamResult> ExamResults { get; set; }
 
-    public ExamDbContext(DbContextOptions<ExamDbContext> options) : base(options)
+    public new void SaveChanges()
     {
+        base.SaveChanges();
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public ExamDbContext(DbContextOptions<ExamDbContext> options) : base(
+        options)
     {
-        base.OnModelCreating(modelBuilder);
     }
 }
 
@@ -36,7 +48,7 @@ public class DataSeeder(ExamDbContext context)
                 new()
                 {
                     Value = "What is cyclomatic complexity?",
-                    QuestionType = Question.Type.MultipleChoice,
+                    QuestionType = QuestionType.MultipleChoice,
                     PossibleAnswers = new()
                     {
                         new()
@@ -47,12 +59,14 @@ public class DataSeeder(ExamDbContext context)
                         },
                         new()
                         {
-                            Value = "A metric that measures the number of lines of code in a program",
+                            Value =
+                                "A metric that measures the number of lines of code in a program",
                             IsCorrect = false
                         },
                         new()
                         {
-                            Value = "A metric that measures the number of methods in a class",
+                            Value =
+                                "A metric that measures the number of methods in a class",
                             IsCorrect = false
                         }
                     }
@@ -60,12 +74,13 @@ public class DataSeeder(ExamDbContext context)
                 new Question()
                 {
                     Value = "What is the purpose of the SOLID principles?",
-                    QuestionType = Question.Type.MultipleChoice,
+                    QuestionType = QuestionType.MultipleChoice,
                     PossibleAnswers = new()
                     {
                         new()
                         {
-                            Value = "To make software easier to maintain and extend",
+                            Value =
+                                "To make software easier to maintain and extend",
                             IsCorrect = true
                         },
                         new()

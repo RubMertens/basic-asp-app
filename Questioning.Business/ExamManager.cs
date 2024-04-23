@@ -6,6 +6,7 @@ using FluentValidation.Internal;
 using FluentValidation.Results;
 using Questioning.Contracts;
 using Questioning.Persistance;
+using Questioning.Persistence;
 
 namespace Questioning.Core;
 
@@ -13,7 +14,7 @@ public class ExamManager(
     IValidator<Exam> examValidator,
     IValidator<Question> questionValidator,
     IValidator<Answer> answerValidator,
-    ExamDbContext context
+    IExamDbContext context
 )
 {
     public IResult<Exam> CreateExam(Exam exam)
@@ -28,13 +29,13 @@ public class ExamManager(
         return new Result<Exam>(exam, validation);
     }
 
-    public IResult<Question> CreateQuestion(string name, List<Answer> possibleAnswers, Question.Type questionType)
+    public IResult<Question> CreateQuestion(string name, List<Answer> possibleAnswers, Question.QuestionType questionQuestionType)
     {
         var question = new Question
         {
             Value = name,
             PossibleAnswers = possibleAnswers,
-            QuestionType = questionType
+            QuestionType = questionQuestionType
         };
 
         var validation = questionValidator.Validate(question);
