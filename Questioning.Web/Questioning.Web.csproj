@@ -12,8 +12,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Questioning.Contracts\Questioning.Contracts.csproj"/>
-        <ProjectReference Include="..\Questioning.Core\Questioning.Core.csproj"/>
-        <ProjectReference Include="..\Questioning.Persistance\Questioning.Persistance.csproj"/>
+        <ProjectReference Include="..\Questioning.Business\Questioning.Business.csproj" />
+        <ProjectReference Include="..\Questioning.Data\Questioning.Data.csproj" />
     </ItemGroup>
 
     <ItemGroup>
