@@ -18,7 +18,9 @@ public class ExamApiTests(QuestioningWebApplicationFactory factory) : IClassFixt
         var response = await client.GetAsync("/exam");
         response.EnsureSuccessStatusCode();
         var document = await GetDocumentAsync(response);
-        Assert.Equal(1, document.QuerySelectorAll("a").Length);
+        var link = document.QuerySelectorAll("a[data-testId^='exam-']");
+        Assert.Equal(1, link.Length);
+        Assert.Equivalent((link[0] as IHtmlLinkElement)?.Href, "/exam/details/1");
     }
 
     public static async Task<IHtmlDocument> GetDocumentAsync(HttpResponseMessage response)
@@ -58,6 +60,6 @@ public class QuestioningWebApplicationFactory : WebApplicationFactory<Program>
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Development");
-        Environment.SetEnvironmentVariable("ConnectionStrings:DefaultConnection", "Data Source=:memory:;Cache=Shared");
+        Environment.SetEnvironmentVariable("ConnectionStrings:DefaultConnection", "Data Source=file::memory:;Cache=Shared");
     }
 }

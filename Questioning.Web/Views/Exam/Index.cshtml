@@ -12,7 +12,7 @@
         @foreach (var exam in Model.Exams)
         {
             <li>
-                <a href="@Url.Action("Details", "Exam", new { id = exam.Id })">@exam.Name</a>
+                <a data-testId="exam-@exam.Id" href="@Url.Action("Details", "Exam", new { id = exam.Id })">@exam.Name</a>
             </li>
         }
     </ul>
