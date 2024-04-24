@@ -2,7 +2,6 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Questioning.Core;
 using Questioning.Persistance;
-using Questioning.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +18,7 @@ builder.Services
 builder.Services.AddValidatorsFromAssemblyContaining<ExamManager>();
 
 builder.Services.AddScoped<IExamDbContext, ExamDbContext>();
+builder.Services.AddScoped<IExamRepository, ExamRepository>();
 builder.Services.AddScoped<ExamManager>();
 builder.Services.AddScoped<DataSeeder>();
 

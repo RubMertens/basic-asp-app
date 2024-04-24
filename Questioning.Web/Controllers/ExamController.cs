@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+
 using Questioning.Contracts;
 using Questioning.Core;
 using Questioning.Persistance;
@@ -8,8 +10,10 @@ namespace Questioning.Web.Controllers;
 
 [Route("[controller]")]
 public class ExamController(
-    ExamDbContext context,
-    ExamManager manager)
+    IExamDbContext context,
+    ExamManager manager,
+    IExamRepository examRepository
+)
     : Controller
 {
     [HttpGet]
@@ -19,7 +23,12 @@ public class ExamController(
             .ToList();
         return View(new ExamsOverview()
         {
-            Exams = exams.Select(e => new ExamsOverview.OverviewItem() { Name = e.Name, Id = e.Id }).ToList()
+            Exams = exams.Select(e =>
+                    new ExamsOverview.OverviewItem()
+                        {
+                            Name = e.Name, Id = e.Id
+                        })
+                .ToList()
         });
     }
 
@@ -37,16 +46,26 @@ public class ExamController(
         {
             Name = exam.Name,
             Description = exam.Description,
-            Questions = exam.Questions.Select(q => new ExamDetail.ExamQuestion()
-            {
-                Question = q.Value,
-                QuestionType = Enum.GetName(q.QuestionType) ?? string.Empty,
-                Id = q.Id,
-                Answers = q.PossibleAnswers.Select(a => new ExamDetail.PossibleAnswer()
+            Questions = exam.Questions.Select(q =>
+                new ExamDetail.ExamQuestion()
                 {
-                    Answer = a.Value, IsCorrect = a.IsCorrect
-                }).ToArray()
-            }).ToList()
+                    Question = q.Value,
+                    QuestionType =
+                        Enum.GetName(
+                            q.QuestionType) ??
+                        string.Empty,
+                    Id = q.Id,
+                    Answers = q.PossibleAnswers
+                        .Select(a =>
+                            new ExamDetail.
+                                PossibleAnswer()
+                                {
+                                    Answer =
+                                        a.Value,
+                                    IsCorrect =
+                                        a.IsCorrect
+                                }).ToArray()
+                }).ToList()
         });
     }
 
@@ -65,15 +84,24 @@ public class ExamController(
             QuestionType =
                 new EditQuestion.QuestionTypeValue()
                 {
-                    Name = Enum.GetName(question.QuestionType), Value = (int)question.QuestionType
+                    Name =
+                        Enum.GetName(question
+                            .QuestionType),
+                    Value = (int)question.QuestionType
                 },
             QuestionTypeOptions =
                 Enum.GetValues<QuestionType>().Select(v =>
-                    new EditQuestion.QuestionTypeValue() { Name = Enum.GetName(v), Value = (int)v }).ToArray(),
-            Answers = question.PossibleAnswers.Select(a => new EditQuestion.Answer()
-            {
-                AnswerId = a.Id, Value = a.Value, IsCorrect = a.IsCorrect
-            }).ToList()
+                    new EditQuestion.QuestionTypeValue()
+                    {
+                        Name = Enum.GetName(v), Value = (int)v
+                    }).ToArray(),
+            Answers = question.PossibleAnswers.Select(a =>
+                new EditQuestion.Answer()
+                {
+                    AnswerId = a.Id,
+                    Value = a.Value,
+                    IsCorrect = a.IsCorrect
+                }).ToList()
         };
 
         return editQuestion;
@@ -95,22 +123,48 @@ public class ExamController(
         {
             Id = model.Id,
             Value = model.Question,
-            QuestionType = (QuestionType)model.QuestionType.Value,
-            PossibleAnswers = model.Answers.Select(a => new Answer()
-            {
-                Id = a.AnswerId, Value = a.Value, IsCorrect = a.IsCorrect
-            }).ToList(),
+            QuestionType =
+                (QuestionType)model.QuestionType.Value,
+            PossibleAnswers = model.Answers.Select(a =>
+                new Answer()
+                {
+                    Id = a.AnswerId,
+                    Value = a.Value,
+                    IsCorrect = a.IsCorrect
+                }).ToList(),
             ExamId = model.ExamId
         });
         if (result.IsValid)
-            return RedirectToAction("Details", new { id = model.ExamId });
+            return RedirectToAction("Details",
+                new { id = model.ExamId });
 
         foreach (var error in result.Validations.Errors)
         {
-            ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            ModelState.AddModelError(error.PropertyName,
+                error.ErrorMessage);
         }
 
         return View(EditQuestionVm(model.Id));
+    }
+
+    [HttpGet("questions-for-exam/{examId:int}")]
+    public IActionResult QuestionsForExam(int examId)
+    {
+        var questions =
+            examRepository.GetQuestionsByExam(examId);
+
+        return Ok(
+            questions
+                .Select(q => new
+                    {
+                        q.Id,
+                        q.Value,
+                        q.QuestionType,
+                        PossibleAnswers = q.PossibleAnswers
+                            .Select(a => new { a.Id, a.Value, a.IsCorrect })
+                            .ToArray()
+                    }
+                ));
     }
 }
 
@@ -119,8 +173,18 @@ public class EditQuestion
     public int Id { get; set; }
     public int ExamId { get; set; }
     public required string Question { get; set; }
-    public required QuestionTypeValue QuestionType { get; set; }
-    public QuestionTypeValue[]? QuestionTypeOptions { get; set; }
+
+    public required QuestionTypeValue QuestionType
+    {
+        get;
+        set;
+    }
+
+    public QuestionTypeValue[]? QuestionTypeOptions
+    {
+        get;
+        set;
+    }
 
     public List<Answer> Answers { get; set; } = new();
 
@@ -142,14 +206,21 @@ public class ExamDetail
 {
     public required string Name { get; set; }
     public required string Description { get; set; }
-    public List<ExamQuestion> Questions { get; set; } = new();
+
+    public List<ExamQuestion> Questions { get; set; } =
+        new();
 
     public class ExamQuestion
     {
         public required string Question { get; set; }
         public required string QuestionType { get; set; }
         public int Id { get; set; }
-        public required PossibleAnswer[] Answers { get; set; }
+
+        public required PossibleAnswer[] Answers
+        {
+            get;
+            set;
+        }
     }
 
     public class PossibleAnswer

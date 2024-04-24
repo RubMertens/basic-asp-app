@@ -5,16 +5,11 @@ namespace Questioning.Contracts;
 
 public class Question
 {
-    [Key] public int Id { get; set; }
-
-    [Required]
-    [MaxLength(100)]
+    public int Id { get; set; }
     public string Value { get; set; } = string.Empty;
-
     public List<Answer> PossibleAnswers { get; set; } = new();
     public QuestionType QuestionType { get; set; }
     public int ExamId { get; set; }
-    [ForeignKey(nameof(ExamId))] 
     public Exam Exam { get; set; }
 }
 

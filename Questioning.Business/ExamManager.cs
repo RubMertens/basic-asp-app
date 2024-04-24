@@ -1,12 +1,7 @@
-using System.ComponentModel;
-using System.Diagnostics.Contracts;
-using System.Net;
 using FluentValidation;
-using FluentValidation.Internal;
 using FluentValidation.Results;
 using Questioning.Contracts;
 using Questioning.Persistance;
-using Questioning.Persistence;
 
 namespace Questioning.Core;
 

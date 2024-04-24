@@ -31,6 +31,13 @@ public class ExamDbContext : DbContext, IExamDbContext
         options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Question>()
+            .Property(q => q.Value)
+            .HasMaxLength(250);
+    }
 }
 
 public class DataSeeder(ExamDbContext context)

@@ -7,7 +7,6 @@ using Moq;
 using Questioning.Contracts;
 using Questioning.Core;
 using Questioning.Persistance;
-using Questioning.Persistence;
 
 namespace Questioning.IntegrationTests;
 

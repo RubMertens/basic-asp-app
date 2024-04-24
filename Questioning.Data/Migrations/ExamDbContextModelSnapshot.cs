@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Questioning.Persistance;
-using Questioning.Persistence;
 
 #nullable disable
 
-namespace Questioning.Persistence.Migrations
+namespace Questioning.Persistance.Migrations
 {
     [DbContext(typeof(ExamDbContext))]
     partial class ExamDbContextModelSnapshot : ModelSnapshot
@@ -35,6 +34,7 @@ namespace Questioning.Persistence.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -54,10 +54,12 @@ namespace Questioning.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -95,6 +97,7 @@ namespace Questioning.Persistence.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
+                        .HasMaxLength(250)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -149,11 +152,13 @@ namespace Questioning.Persistence.Migrations
 
             modelBuilder.Entity("Questioning.Contracts.Question", b =>
                 {
-                    b.HasOne("Questioning.Contracts.Exam", null)
+                    b.HasOne("Questioning.Contracts.Exam", "Exam")
                         .WithMany("Questions")
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Exam");
                 });
 
             modelBuilder.Entity("Questioning.Contracts.QuestionResult", b =>

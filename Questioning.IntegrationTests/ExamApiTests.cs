@@ -34,15 +34,6 @@ public class ExamApiTests
         );
     }
 
-    [Fact]
-    public async Task
-        ExamManager_UpdateQuestion_UpdatesWithoutInsertingMoreAnswers()
-    {
-        using var scope = factory.Services.CreateScope();
-        var manager = scope.ServiceProvider
-            .GetRequiredService<ExamManager>();
-    }
-
     public static async Task<IHtmlDocument> GetDocumentAsync(
         HttpResponseMessage response)
     {

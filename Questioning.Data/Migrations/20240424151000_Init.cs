@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Questioning.Persistence.Migrations
+namespace Questioning.Persistance.Migrations
 {
     /// <inheritdoc />
     public partial class Init : Migration
@@ -16,8 +16,8 @@ namespace Questioning.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -49,7 +49,7 @@ namespace Questioning.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Value = table.Column<string>(type: "TEXT", nullable: false),
+                    Value = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
                     QuestionType = table.Column<int>(type: "INTEGER", nullable: false),
                     ExamId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -95,7 +95,7 @@ namespace Questioning.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Value = table.Column<string>(type: "TEXT", nullable: false),
+                    Value = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     IsCorrect = table.Column<bool>(type: "INTEGER", nullable: false),
                     QuestionId = table.Column<int>(type: "INTEGER", nullable: true),
                     QuestionResultId = table.Column<int>(type: "INTEGER", nullable: true)
