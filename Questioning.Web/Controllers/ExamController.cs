@@ -1,15 +1,16 @@
-using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Questioning.Contracts;
 using Questioning.Core;
 using Questioning.Persistance;
-using Questioning.Persistence;
 
 namespace Questioning.Web.Controllers;
 
 [Route("[controller]")]
-public class ExamController(ExamDbContext context, ExamManager manager) : Controller
+public class ExamController(
+    ExamDbContext context,
+    ExamManager manager)
+    : Controller
 {
     [HttpGet]
     public IActionResult Index()
@@ -18,11 +19,7 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
             .ToList();
         return View(new ExamsOverview()
         {
-            Exams = exams.Select(e => new ExamsOverview.OverviewItem()
-            {
-                Name = e.Name,
-                Id = e.Id
-            }).ToList()
+            Exams = exams.Select(e => new ExamsOverview.OverviewItem() { Name = e.Name, Id = e.Id }).ToList()
         });
     }
 
@@ -33,6 +30,9 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
             .Include(e => e.Questions)
             .ThenInclude(q => q.PossibleAnswers)
             .FirstOrDefault(e => e.Id == id);
+        if (exam == null)
+            return NotFound();
+
         return View(new ExamDetail()
         {
             Name = exam.Name,
@@ -40,12 +40,11 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
             Questions = exam.Questions.Select(q => new ExamDetail.ExamQuestion()
             {
                 Question = q.Value,
-                QuestionType = Enum.GetName(q.QuestionType),
+                QuestionType = Enum.GetName(q.QuestionType) ?? string.Empty,
                 Id = q.Id,
                 Answers = q.PossibleAnswers.Select(a => new ExamDetail.PossibleAnswer()
                 {
-                    Answer = a.Value,
-                    IsCorrect = a.IsCorrect
+                    Answer = a.Value, IsCorrect = a.IsCorrect
                 }).ToArray()
             }).ToList()
         });
@@ -56,29 +55,27 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
         var question = context.Questions
             .Include(q => q.PossibleAnswers)
             .FirstOrDefault(q => q.Id == id);
+        if (question == null)
+            return null;
         var editQuestion = new EditQuestion()
         {
             Id = question.Id,
             ExamId = question.ExamId,
             Question = question.Value,
-            QuestionType = new EditQuestion.QuestionTypeValue()
-            {
-                Name = Enum.GetName(question.QuestionType),
-                Value = (int)question.QuestionType
-            },
-            QuestionTypeOptions = Enum.GetValues<QuestionType>().Select(v => new EditQuestion.QuestionTypeValue()
-            {
-                Name = Enum.GetName(v),
-                Value = (int)v
-            }).ToArray(),
+            QuestionType =
+                new EditQuestion.QuestionTypeValue()
+                {
+                    Name = Enum.GetName(question.QuestionType), Value = (int)question.QuestionType
+                },
+            QuestionTypeOptions =
+                Enum.GetValues<QuestionType>().Select(v =>
+                    new EditQuestion.QuestionTypeValue() { Name = Enum.GetName(v), Value = (int)v }).ToArray(),
             Answers = question.PossibleAnswers.Select(a => new EditQuestion.Answer()
             {
-                AnswerId = a.Id,
-                Value = a.Value,
-                IsCorrect = a.IsCorrect
+                AnswerId = a.Id, Value = a.Value, IsCorrect = a.IsCorrect
             }).ToList()
         };
-        
+
         return editQuestion;
     }
 
@@ -101,9 +98,7 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
             QuestionType = (QuestionType)model.QuestionType.Value,
             PossibleAnswers = model.Answers.Select(a => new Answer()
             {
-                Id = a.AnswerId,
-                Value = a.Value,
-                IsCorrect = a.IsCorrect
+                Id = a.AnswerId, Value = a.Value, IsCorrect = a.IsCorrect
             }).ToList(),
             ExamId = model.ExamId
         });
@@ -114,6 +109,7 @@ public class ExamController(ExamDbContext context, ExamManager manager) : Contro
         {
             ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
         }
+
         return View(EditQuestionVm(model.Id));
     }
 }
@@ -122,8 +118,8 @@ public class EditQuestion
 {
     public int Id { get; set; }
     public int ExamId { get; set; }
-    public string Question { get; set; }
-    public QuestionTypeValue QuestionType { get; set; }
+    public required string Question { get; set; }
+    public required QuestionTypeValue QuestionType { get; set; }
     public QuestionTypeValue[]? QuestionTypeOptions { get; set; }
 
     public List<Answer> Answers { get; set; } = new();
@@ -131,7 +127,7 @@ public class EditQuestion
     public class Answer
     {
         public int AnswerId { get; set; }
-        public string Value { get; set; }
+        public required string Value { get; set; }
         public bool IsCorrect { get; set; }
     }
 
@@ -169,7 +165,7 @@ public class ExamsOverview
 
     public class OverviewItem
     {
-        public string Name { get; set; }
+        public required string Name { get; set; }
         public int Id { get; set; }
     }
 }

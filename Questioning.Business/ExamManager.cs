@@ -61,18 +61,12 @@ public class ExamManager(
     }
 }
 
-public class Result<T> : IResult<T>
+public class Result<T>(T value, ValidationResult validations) : IResult<T>
 {
-    public T Value { get; set; }
-    public ValidationResult Validations { get; set; }
+    public T Value { get; set; } = value;
+    public ValidationResult Validations { get; set; } = validations;
 
     public bool IsValid => Validations.IsValid;
-
-    public Result(T value, ValidationResult validations)
-    {
-        Value = value;
-        Validations = validations;
-    }
 }
 
 public interface IResult<T>
