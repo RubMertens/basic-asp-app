@@ -12,6 +12,12 @@ public class ExamManager(
     IExamDbContext context
 )
 {
+
+    public void DeleteExam(Exam exam)
+    {
+
+    }
+
     public IResult<Exam> CreateExam(Exam exam)
     {
         var validation = examValidator.Validate(exam);

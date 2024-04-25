@@ -9,6 +9,7 @@ public interface IExamRepository
     void UpdateQuestion(Question question);
 
     IEnumerable<Question> GetQuestionsByExam(int examId);
+    IEnumerable<Exam> GetAllPassedExams(int examId);
 }
 
 public class ExamRepository(IExamDbContext context) : IExamRepository
@@ -32,4 +33,10 @@ public class ExamRepository(IExamDbContext context) : IExamRepository
                 .Where(q => q.ExamId == examId)
             ;
     }
+
+    public IEnumerable<Exam> GetAllPassedExams(int examId)
+    {
+        throw new NotImplementedException();
+    }
+
 }

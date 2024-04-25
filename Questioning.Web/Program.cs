@@ -1,18 +1,24 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+
+using Questioning.Contracts;
 using Questioning.Core;
 using Questioning.Persistance;
+
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
     .AddControllersWithViews()
-    .AddRazorRuntimeCompilation();
+.AddRazorRuntimeCompilation();
 ;
+
+
 builder.Services
     .AddDbContext<ExamDbContext>(o =>
-        o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+        o.UseSqlite(@"Data Source=Encrypted.db;Password=MyEncryptionKey")
     );
 
 builder.Services.AddValidatorsFromAssemblyContaining<ExamManager>();
