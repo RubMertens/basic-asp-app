@@ -1,11 +1,9 @@
-using AngleSharp.Html.Dom;
 using FluentValidation;
 using FluentValidation.Results;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using Questioning.Business;
-using Questioning.Contracts;
+using Questioning.Domain;
 using Questioning.Persistance;
 
 namespace Questioning.IntegrationTests;
