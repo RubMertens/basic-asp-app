@@ -1,4 +1,4 @@
-namespace Questioning.Contracts;
+namespace Questioning.Domain;
 
 public class QuestionResult
 {

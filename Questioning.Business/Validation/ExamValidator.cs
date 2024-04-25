@@ -1,7 +1,7 @@
 using FluentValidation;
-using Questioning.Contracts;
+using Questioning.Domain;
 
-namespace Questioning.Core.Validation;
+namespace Questioning.Business.Validation;
 
 public class ExamValidator : AbstractValidator<Exam>
 {

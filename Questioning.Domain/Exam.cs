@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 
-namespace Questioning.Contracts;
+namespace Questioning.Domain;
 
 public class Exam
 {

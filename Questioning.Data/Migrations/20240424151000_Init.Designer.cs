@@ -20,7 +20,7 @@ namespace Questioning.Persistance.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.4");
 
-            modelBuilder.Entity("Questioning.Contracts.Answer", b =>
+            modelBuilder.Entity("Questioning.Domain.Answer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace Questioning.Persistance.Migrations
                     b.ToTable("Answers");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.Exam", b =>
+            modelBuilder.Entity("Questioning.Domain.Exam", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -70,7 +70,7 @@ namespace Questioning.Persistance.Migrations
                     b.ToTable("Exams");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.ExamResult", b =>
+            modelBuilder.Entity("Questioning.Domain.ExamResult", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace Questioning.Persistance.Migrations
                     b.ToTable("ExamResults");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.Question", b =>
+            modelBuilder.Entity("Questioning.Domain.Question", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -110,7 +110,7 @@ namespace Questioning.Persistance.Migrations
                     b.ToTable("Questions");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.QuestionResult", b =>
+            modelBuilder.Entity("Questioning.Domain.QuestionResult", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -131,20 +131,20 @@ namespace Questioning.Persistance.Migrations
                     b.ToTable("QuestionResults");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.Answer", b =>
+            modelBuilder.Entity("Questioning.Domain.Answer", b =>
                 {
-                    b.HasOne("Questioning.Contracts.Question", null)
+                    b.HasOne("Questioning.Domain.Question", null)
                         .WithMany("PossibleAnswers")
                         .HasForeignKey("QuestionId");
 
-                    b.HasOne("Questioning.Contracts.QuestionResult", null)
+                    b.HasOne("Questioning.Domain.QuestionResult", null)
                         .WithMany("Answers")
                         .HasForeignKey("QuestionResultId");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.ExamResult", b =>
+            modelBuilder.Entity("Questioning.Domain.ExamResult", b =>
                 {
-                    b.HasOne("Questioning.Contracts.Exam", "Exam")
+                    b.HasOne("Questioning.Domain.Exam", "Exam")
                         .WithMany()
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -153,9 +153,9 @@ namespace Questioning.Persistance.Migrations
                     b.Navigation("Exam");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.Question", b =>
+            modelBuilder.Entity("Questioning.Domain.Question", b =>
                 {
-                    b.HasOne("Questioning.Contracts.Exam", "Exam")
+                    b.HasOne("Questioning.Domain.Exam", "Exam")
                         .WithMany("Questions")
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -164,13 +164,13 @@ namespace Questioning.Persistance.Migrations
                     b.Navigation("Exam");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.QuestionResult", b =>
+            modelBuilder.Entity("Questioning.Domain.QuestionResult", b =>
                 {
-                    b.HasOne("Questioning.Contracts.ExamResult", null)
+                    b.HasOne("Questioning.Domain.ExamResult", null)
                         .WithMany("QuestionResults")
                         .HasForeignKey("ExamResultId");
 
-                    b.HasOne("Questioning.Contracts.Question", "Question")
+                    b.HasOne("Questioning.Domain.Question", "Question")
                         .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -179,22 +179,22 @@ namespace Questioning.Persistance.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.Exam", b =>
+            modelBuilder.Entity("Questioning.Domain.Exam", b =>
                 {
                     b.Navigation("Questions");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.ExamResult", b =>
+            modelBuilder.Entity("Questioning.Domain.ExamResult", b =>
                 {
                     b.Navigation("QuestionResults");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.Question", b =>
+            modelBuilder.Entity("Questioning.Domain.Question", b =>
                 {
                     b.Navigation("PossibleAnswers");
                 });
 
-            modelBuilder.Entity("Questioning.Contracts.QuestionResult", b =>
+            modelBuilder.Entity("Questioning.Domain.QuestionResult", b =>
                 {
                     b.Navigation("Answers");
                 });

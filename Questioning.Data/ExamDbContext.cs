@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Questioning.Contracts;
+using Questioning.Domain;
 
 namespace Questioning.Persistance;
 

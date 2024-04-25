@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Questioning.Contracts;
+namespace Questioning.Domain;
 
 public class Answer
 {

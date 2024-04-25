@@ -4,8 +4,8 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Questioning.Business;
 using Questioning.Contracts;
-using Questioning.Core;
 using Questioning.Persistance;
 
 namespace Questioning.IntegrationTests;

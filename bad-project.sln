@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.Business", "Que
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.Data", "Questioning.Data\Questioning.Data.csproj", "{C3FDA0B3-381F-4F8B-B247-CA44A723EA11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.Contracts", "Questioning.Contracts\Questioning.Contracts.csproj", "{BB0F58A2-E8B7-4939-91FF-D11BBB3BF9C2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.Domain", "Questioning.Domain\Questioning.Domain.csproj", "{BB0F58A2-E8B7-4939-91FF-D11BBB3BF9C2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.Web", "Questioning.Web\Questioning.Web.csproj", "{5819C092-95C8-4CAC-9EF1-06BA0E468004}"
 EndProject

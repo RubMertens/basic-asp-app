@@ -1,9 +1,9 @@
 using FluentValidation;
 using FluentValidation.Results;
-using Questioning.Contracts;
+using Questioning.Domain;
 using Questioning.Persistance;
 
-namespace Questioning.Core;
+namespace Questioning.Business;
 
 public class ExamManager(
     IValidator<Exam> examValidator,

@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-
-using Questioning.Contracts;
-using Questioning.Core;
+using Questioning.Business;
+using Questioning.Domain;
 using Questioning.Persistance;
 
 namespace Questioning.Web.Controllers;

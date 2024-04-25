@@ -1,6 +1,6 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Questioning.Core;
+using Questioning.Business;
 using Questioning.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);

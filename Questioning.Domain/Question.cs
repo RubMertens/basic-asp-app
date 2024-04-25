@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Questioning.Contracts;
+namespace Questioning.Domain;
 
 public class Question
 {
