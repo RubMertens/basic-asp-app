@@ -11,10 +11,13 @@ builder.Services
     .AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 ;
+
+
 builder.Services
     .AddDbContext<ExamDbContext>(o =>
-        o.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
+        o.UseSqlite(@"Data Source=Encrypted.db;Password=MyEncryptionKey")
     );
+    
 
 builder.Services.AddValidatorsFromAssemblyContaining<ExamManager>();
 

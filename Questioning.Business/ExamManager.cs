@@ -18,6 +18,7 @@ public class ExamManager(
     {
         
     }
+    
     public IResult<Exam> CreateExam(Exam exam)
     {
         var validation = examValidator.Validate(exam);
