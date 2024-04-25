@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Questioning.Domain;
 
-namespace Questioning.Persistance;
+namespace Questioning.Data;
 
 public interface IExamRepository
 {
