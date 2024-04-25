@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.Domain", "Quest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.Web", "Questioning.Web\Questioning.Web.csproj", "{5819C092-95C8-4CAC-9EF1-06BA0E468004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Questioning.IntegrationTests", "Questioning.IntegrationTests\Questioning.IntegrationTests.csproj", "{0DCC2011-F60E-40BE-AF29-DEDF3389C308}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,9 +36,5 @@ Global
 		{5819C092-95C8-4CAC-9EF1-06BA0E468004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5819C092-95C8-4CAC-9EF1-06BA0E468004}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5819C092-95C8-4CAC-9EF1-06BA0E468004}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0DCC2011-F60E-40BE-AF29-DEDF3389C308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0DCC2011-F60E-40BE-AF29-DEDF3389C308}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0DCC2011-F60E-40BE-AF29-DEDF3389C308}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0DCC2011-F60E-40BE-AF29-DEDF3389C308}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
