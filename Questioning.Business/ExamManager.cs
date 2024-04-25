@@ -12,6 +12,11 @@ public class ExamManager(
     IExamDbContext context
 )
 {
+
+    public void CreateAnswer(Answer answer)
+    {
+        
+    }
     public IResult<Exam> CreateExam(Exam exam)
     {
         var validation = examValidator.Validate(exam);
