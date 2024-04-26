@@ -12,7 +12,7 @@ builder.Services
     .AddRazorRuntimeCompilation();
 ;
 
-
+//Bad practise
 builder.Services
     .AddDbContext<ExamDbContext>(o =>
         o.UseSqlite(@"Data Source=Encrypted.db;Password=MyEncryptionKey")
